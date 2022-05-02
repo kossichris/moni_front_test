@@ -6,9 +6,10 @@ This project is deployed on (https://moni-front-test.vercel.app/login)
 
 In the project directory, you can run:
 
+### `npm install`
+
 ### `npm run start`
 
-### `npm install`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
