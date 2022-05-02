@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { baseLocalURL } from "../helper/api";
-
+import { baseServerURL } from "../helper/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +28,7 @@ export default function Home() {
   });
 
   useEffect(async () => {
-    let response = await axios.get(baseLocalURL + "/user", {
+    let response = await axios.get(baseServerURL + "/user", {
       headers: {
         Authorization: `Token ${token}`,
       },
@@ -46,7 +45,7 @@ export default function Home() {
       });
     }
 
-    let responseUsers = await axios.get(baseLocalURL + "/users", {
+    let responseUsers = await axios.get(baseServerURL + "/users", {
       headers: {
         Authorization: `Token ${token}`,
       },
@@ -63,7 +62,7 @@ export default function Home() {
     };
     if (account.balance > 0) {
       let response = await axios.post(
-        baseLocalURL + "/wallet/fund",
+        baseServerURL + "/wallet/fund",
         { wallet: account },
         {
           headers: {
@@ -73,7 +72,7 @@ export default function Home() {
       );
       if (response.data) {
         notify("Wallet funded");
-        let response = await axios.get(baseLocalURL + "/user", {
+        let response = await axios.get(baseServerURL + "/user", {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -85,7 +84,7 @@ export default function Home() {
 
   const transferMoney = async (data) => {
     let response = await axios.post(
-      baseLocalURL + `/wallet/${recipientId}/transfer`,
+      baseServerURL + `/wallet/${recipientId}/transfer`,
       { wallet: { amount: parseFloat(data.amount) } },
       {
         headers: {
@@ -124,7 +123,7 @@ export default function Home() {
         <label
           onClick={() => {
             localStorage.removeItem("userMoniToken");
-            navigate("/login");
+            window.open("/login");
           }}
           className="btn btn--apply btn--primary logout--btn"
           htmlFor="modal-1"

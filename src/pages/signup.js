@@ -1,17 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-
 import Loader from "../components/Loader";
-import { baseLocalURL } from "../helper/api";
+import { baseServerURL } from "../helper/api";
 
 const c = console.log.bind(console);
 
 export default function Signup() {
-  let navigate = useNavigate();
-
-  const [User, setUser] = useState();
   const [loading, setLoading] = useState(false);
   const [showPassNotMatch, setshowPassNotMatch] = useState(false);
   const [showUserExist, setUserExist] = useState(false);
@@ -26,14 +21,14 @@ export default function Signup() {
     if (data.password === data.confirm) {
       try {
         setLoading(true);
-        let response = await axios.post(baseLocalURL + "/users", {
+        let response = await axios.post(baseServerURL + "/users", {
           user: data,
         });
         c(response);
         if (response.data) {
           const user = response.data.user;
           localStorage.setItem("userMoniToken", user.token);
-          navigate("/home");
+          window.open("/home");
           setLoading(false);
         }
       } catch (error) {

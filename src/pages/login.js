@@ -1,14 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-
 import Loader from "../components/Loader";
-import { baseLocalURL } from "../helper/api";
+import { baseServerURL } from "../helper/api";
 
 export default function Login() {
-  let navigate = useNavigate();
-
   const [User, setUser] = useState();
   const [loading, setLoading] = useState(false);
   const [showPassNotMatch, setshowPassNotMatch] = useState(false);
@@ -23,13 +19,15 @@ export default function Login() {
   const onSubmit = async (data) => {
     try {
       setLoading(true);
-      let response = await axios.post(baseLocalURL + "/users/login", {
+      let response = await axios.post(baseServerURL + "/users/login", {
         user: data,
       });
       if (response.data) {
         const user = response.data.user;
+        console.log(user);
         localStorage.setItem("userMoniToken", user.token);
-        navigate("/home");
+        console.log(localStorage.getItem("userMoniToken"));
+        window.open("/home");
         setLoading(false);
       }
     } catch (error) {
